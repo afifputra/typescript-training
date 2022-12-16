@@ -1,10 +1,13 @@
 class Department {
-  // private id: string;
-  // private name: string;
+  private readonly id: string;
+  name: string;
   private employees: string[] = [];
 
-  constructor(private id: string, public name: string) {
-    // this.name = name;
+  // constructor(private id: string, public name) {}
+
+  constructor(id: string, name: string) {
+    this.id = id;
+    this.name = name;
   }
 
   describe(this: Department) {
