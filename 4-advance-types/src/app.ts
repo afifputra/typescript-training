@@ -1,3 +1,4 @@
+// Intersection Types
 type Admin = {
   name: string;
   privileges: string[];
@@ -27,6 +28,7 @@ const add = (a: Combinable, b: Combinable) => {
   return a + b;
 };
 
+// Type Guards
 type UnknownEmployee = Employee | Admin;
 
 const printEmployeeInformation = (emp: UnknownEmployee) => {
@@ -70,3 +72,32 @@ const useVehicle = (vehicle: Vehicle) => {
 
 useVehicle(v1);
 useVehicle(v2);
+
+// Descriminated Unions
+interface Bird {
+  type: "bird";
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: "horse";
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+const moveAnimal = (animal: Animal) => {
+  let speed;
+
+  switch (animal.type) {
+    case "bird":
+      speed = animal.flyingSpeed;
+      break;
+    case "horse":
+      speed = animal.runningSpeed;
+  }
+
+  console.log(`Moving at speed: ${speed}`);
+};
+
+moveAnimal({ type: "bird", flyingSpeed: 100 });
