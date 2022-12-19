@@ -118,3 +118,16 @@ const errorBag: ErrorContainer = {
   email: "Not a valid email!",
   username: "Must start with a capital character!",
 };
+
+// Function Overloads
+type Mix = string | number;
+
+function sumNumber(a: number, b: number): number;
+function sumNumber(a: string, b: string): string;
+function sumNumber(a: Mix, b: Mix) {
+  if (typeof a === "string" || typeof b === "string") return a.toString() + b.toString();
+
+  return a + b;
+}
+
+const result = sumNumber("Afif", "Firdaus");
