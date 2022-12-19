@@ -131,3 +131,12 @@ function sumNumber(a: Mix, b: Mix) {
 }
 
 const result = sumNumber("Afif", "Firdaus");
+
+// Optional Chaining
+const fetchedUserData = {
+  id: "u1",
+  name: "Afif",
+  job: { title: "CEO", description: "My own company" },
+};
+
+console.log(fetchedUserData?.job?.title);
