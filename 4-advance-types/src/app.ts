@@ -140,3 +140,10 @@ const fetchedUserData = {
 };
 
 console.log(fetchedUserData?.job?.title);
+
+// Nullish Coalescing
+const userInputNew = null;
+
+const storedData = userInputNew ?? "DEFAULT";
+
+console.log(storedData);
