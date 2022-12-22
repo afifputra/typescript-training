@@ -2,6 +2,9 @@ class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLFormElement;
+  titleInputElement: HTMLInputElement;
+  descriptionInputElement: HTMLInputElement;
+  peopleInputElement: HTMLInputElement;
 
   constructor() {
     this.templateElement = document.querySelector("#project-input")!;
@@ -9,12 +12,27 @@ class ProjectInput {
 
     const importedNode = document.importNode(this.templateElement.content, true);
     this.element = importedNode.firstElementChild as HTMLFormElement;
+
+    this.titleInputElement = this.element.querySelector("#title")!;
+    this.descriptionInputElement = this.element.querySelector("#description")!;
+    this.peopleInputElement = this.element.querySelector("#people")!;
+
+    this.configure();
     this.attach();
   }
 
-  private attach() {
+  private submitHandler = (event: Event) => {
+    event.preventDefault();
+    console.log(this.titleInputElement.value);
+  };
+
+  private configure = () => {
+    this.element.addEventListener("submit", this.submitHandler);
+  };
+
+  private attach = () => {
     this.hostElement.insertAdjacentElement("afterbegin", this.element);
-  }
+  };
 }
 
 const prjInput = new ProjectInput();
