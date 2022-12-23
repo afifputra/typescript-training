@@ -120,7 +120,13 @@ class ProjectList {
     this.assignedProjects = [];
 
     projectState.addListerner((projects: Project[]) => {
-      this.assignedProjects = projects;
+      const relevantProjects = projects.filter((prj) => {
+        if (this.type === "active") {
+          return prj.status === ProjectStatus.Active;
+        }
+        return prj.status === ProjectStatus.Finished;
+      });
+      this.assignedProjects = relevantProjects;
       this.renderProjects();
     });
 
@@ -130,6 +136,7 @@ class ProjectList {
 
   private renderProjects() {
     const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+    listEl.innerHTML = "";
     for (const prjItem of this.assignedProjects) {
       const listItem = document.createElement("li");
       listItem.textContent = prjItem.title;
@@ -195,12 +202,11 @@ class ProjectInput {
       max: 5,
     };
 
-    if (!validate(titleValidatable) && !validate(descriptionValidatable) && !validate(peopleValidatable)) {
-      alert("Invalid input, please try again!");
-      return;
-    } else {
+    if (validate(titleValidatable) && validate(descriptionValidatable) && validate(peopleValidatable)) {
       return [enteredTitle, enteredDescription, +enteredPeople];
     }
+    alert("Invalid input, please try again!");
+    return;
   }
 
   private clearInputs() {
