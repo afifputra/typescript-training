@@ -1,7 +1,31 @@
+// Project Status Enum
+enum ProjectStatus {
+  Active,
+  Finished,
+}
+
+// Project Type
+class Project {
+  id: string;
+  title: string;
+  description: string;
+  people: number;
+  status: ProjectStatus;
+
+  constructor(id: string, title: string, description: string, people: number, status: ProjectStatus) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.people = people;
+    this.status = status;
+  }
+}
+
 // Project State Management
+type Listener = (items: Project[]) => void;
 class ProjectState {
-  private listerners: any[] = [];
-  private projects: any[] = [];
+  private listerners: Listener[] = [];
+  private projects: Project[] = [];
   private static instance: ProjectState;
 
   private constructor() {}
@@ -14,17 +38,12 @@ class ProjectState {
     return this.instance;
   }
 
-  addListerner(listernerFn: Function) {
+  addListerner(listernerFn: Listener) {
     this.listerners.push(listernerFn);
   }
 
   addProject(title: string, description: string, numOfPeople: number) {
-    const newProject = {
-      id: Math.random().toString(),
-      title,
-      description,
-      people: numOfPeople,
-    };
+    const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
     this.projects.push(newProject);
     for (const listernerFn of this.listerners) {
       listernerFn(this.projects.slice());
@@ -88,7 +107,7 @@ class ProjectList {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
   element: HTMLElement;
-  assignedProjects: any[];
+  assignedProjects: Project[];
 
   constructor(private type: "active" | "finished") {
     this.templateElement = document.querySelector("#project-list")! as HTMLTemplateElement;
@@ -100,7 +119,7 @@ class ProjectList {
 
     this.assignedProjects = [];
 
-    projectState.addListerner((projects: any[]) => {
+    projectState.addListerner((projects: Project[]) => {
       this.assignedProjects = projects;
       this.renderProjects();
     });
