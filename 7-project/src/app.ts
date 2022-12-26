@@ -148,7 +148,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 }
 
 // ProjectItem Class
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
   private project: Project;
 
   get persons() {
@@ -167,20 +167,20 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     this.renderContent();
   }
 
-  // @AutoBind
-  // dragStartHandler(event: DragEvent) {
-  //   event.dataTransfer!.setData("text/plain", this.project.id);
-  //   event.dataTransfer!.effectAllowed = "move";
-  // }
+  @AutoBind
+  dragStartHandler(event: DragEvent) {
+    event.dataTransfer!.setData("text/plain", this.project.id);
+    event.dataTransfer!.effectAllowed = "move";
+  }
 
-  // @AutoBind
-  // dragEndHandler(_: DragEvent) {
-  //   console.log("DragEnd");
-  // }
+  @AutoBind
+  dragEndHandler(_: DragEvent) {
+    console.log("DragEnd");
+  }
 
   configure() {
-    // this.element.addEventListener("dragstart", this.dragStartHandler);
-    // this.element.addEventListener("dragend", this.dragEndHandler);
+    this.element.addEventListener("dragstart", this.dragStartHandler);
+    this.element.addEventListener("dragend", this.dragEndHandler);
   }
 
   renderContent() {
