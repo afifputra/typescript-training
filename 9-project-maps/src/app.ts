@@ -7,6 +7,7 @@ function searchAddressHandler(event: Event) {
   const enteredAddress = addressInput.value;
 
   // send this to Google's API!
+  console.log(enteredAddress);
 }
 
 form.addEventListener("submit", searchAddressHandler);
