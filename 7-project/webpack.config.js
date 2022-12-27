@@ -5,8 +5,8 @@ module.exports = {
   entry: "./src/app.ts",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "dist", "js"),
-    publicPath: "dist",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: "/dist",
   },
   devtool: "inline-source-map",
   module: {
@@ -26,7 +26,7 @@ module.exports = {
     host: "localhost",
     port: 9000,
     static: {
-      directory: path.join(__dirname, "dist"),
+      directory: path.join(__dirname, "public"),
     },
   },
 };
